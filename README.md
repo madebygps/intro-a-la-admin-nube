@@ -2,7 +2,7 @@
 
 | Orden         | Sesion    
 |--------------|-----------
-| 1 | [Cómo proteger sus recursos de Azure con Azure RBAC](rbac/readme.md)      
+| 1 | [Cómo proteger sus recursos de Azure con Azure RBAC](rbac/README.md)      
 | 2 | [Administrar máquinas virtuales con la CLI de Azure](cli/readme.md)   
 | 3 | [Cómo configurar redes virtuales en Azure](redes/readme.md)      
 | 4 | [Monitoreo de máquinas virtuales de Azure con Azure VM insights](monitoreo/readme.md)  
