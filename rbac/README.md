@@ -40,12 +40,54 @@ El control de acceso basado en roles de Azure (Azure RBAC) es un sistema de auto
     - Cree o actualice cualquier artefacto de plano
     - Eliminar cualquier artefacto de plano
 
+---
 ## Demo
 
-- Acceso a listas.
-- Enumere las asignaciones de roles para usted.
-- Enumere las asignaciones de roles para un grupo de recursos
-- Lista de roles integrados
-- Otorgar acceso a un grupo de recursos
-- Ver registros de actividad
-- Quitar acceso
+## Listar accesso
+
+1. Lista de asignaciones de role para un resource group
+
+    ```sh 
+    az role assignment list --include-inherited --resource-group {resourcegroupname} --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
+    ```
+
+2. Lista de asignaciones de roles para una usuaria
+
+    ```sh
+    az role assignment list --all --assignee {objectId}
+    ```
+
+3. Enumere las asignaciones de roles para una suscripción
+
+    ```sh
+    az role assignment list --subscription {subscriptionNameOrId}
+    ```
+
+## Asignar roles de Azure mediante la CLI de Azure
+
+
+1. Determinar quién necesita acceso
+    ```sh
+    az ad user show --id "{principalName}" --query "objectId" --output tsv
+    ```
+    Podemos guardar este valor en una variable `objectId`
+    ```sh
+    objectId=$(az ad user show --id $username --query "objectId" --output tsv)
+    ```
+
+2. Crear la asignación de rol
+    ```sh
+    az role assignment create --assignee $user --role reader --resource-group {resourcegroupname}
+    ```
+3. Verifique que se haya creado la asignación
+
+    ```sh
+    az role assignment list --include-inherited --resource-group {resourcegroupname}
+    ```
+
+## Quitar roles de Azure mediante la CLI de Azure
+
+1. Quitar rol a un usuario
+    ```sh
+    az role assignment delete --assignee $user --role reader --resource-group {resourcegroupname}
+    ```
