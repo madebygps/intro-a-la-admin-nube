@@ -72,12 +72,12 @@ El control de acceso basado en roles de Azure (Azure RBAC) es un sistema de auto
     ```
     Podemos guardar este valor en una variable `objectId`
     ```sh
-    objectId=$(az ad user show --id $username --query "objectId" --output tsv)
+    objectId=$(az ad user show --id {principalName} --query "objectId" --output tsv)
     ```
 
 2. Crear la asignación de rol
     ```sh
-    az role assignment create --assignee $user --role reader --resource-group {resourcegroupname}
+    az role assignment create --assignee {objectId} --role reader --resource-group {resourcegroupname}
     ```
 3. Verifique que se haya creado la asignación
 
@@ -91,3 +91,13 @@ El control de acceso basado en roles de Azure (Azure RBAC) es un sistema de auto
     ```sh
     az role assignment delete --assignee $user --role reader --resource-group {resourcegroupname}
     ```
+## Listar roles disponibles
+
+```sh
+az role definition list --custom-role-only false --output json --query '[].{roleName:roleName, description:description, roleType:roleType}'
+```
+
+## ¿Quiere aprender más?
+
+- [Concesión de acceso de usuario a los recursos de Azure mediante Azure Portal](https://docs.microsoft.com/azure/role-based-access-control/quickstart-assign-role-user-portal)
+- [Protección de los recursos de Azure con el control de acceso basado en roles de Azure (Azure RBAC](https://docs.microsoft.com/learn/modules/secure-azure-resources-with-rbac/)
