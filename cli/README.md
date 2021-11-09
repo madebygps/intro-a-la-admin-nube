@@ -1,32 +1,32 @@
-# Manage virtual machines with the Azure CLI
-For more https://aka.ms/AzureCLI3
+# Administrar máquinas virtuales con la CLI de Azure
+https://aka.ms/AzureCLI3
 
 ## Intro
 
-The Azure Portal is great for one-off tasks but when it comes to multiple tasks, navigating through the various panes adds time and isn’t productive. 
+El Portal de Azure es ideal para tareas únicas, pero cuando se trata de múltiples tareas, navegar por los distintos paneles agrega tiempo y no es productivo.
 
-This is where the command line shines! You use commands and scripts to run repetitive tasks.
+¡Aquí es donde brilla la línea de comandos! Utiliza comandos y scripts para ejecutar tareas repetitivas.
 
-With Azure, you have two different command lines tools you can work with:
+Con Azure, tiene dos herramientas de líneas de comando diferentes con las que puede trabajar:
 
-- Azure PowerShell (Windows admins tend to prefer this one)
-- Azure CLI (Linux admins tend to prefer this one)
+- Azure PowerShell (administradores de Windows tienden a preferir este)
+- CLI de Azure (administradores de Linux tienden a preferir este)
 
-With either one, you can write scripts to check the status of cloud servers, deploy new configurations, open ports in the firewall, or connect to a virtual machine to change a setting.
+Con cualquiera de ellos, puede escribir scripts para verificar el estado de los servidores en la nube, implementar nuevas configuraciones, abrir puertos en el firewall o conectarse a una máquina virtual para cambiar una configuración.
 
-In this session we are going to focus on the Azure CLI, but any task can be accomplished in the PowerShell version. 
+En esta sesión nos centraremos en la CLI de Azure, pero cualquier tarea se puede realizar en la versión de PowerShell.
 
-## What is the Azure CLI?
+## ¿Qué es la CLI de Azure?
 
-The Azure CLI is Microsoft’s cross-platform command-line tool for managing Azure resources. You can use it on Mac OS, Linux, Windows and from a browser via the Azure Cloud Shell.
+La CLI de Azure es la herramienta de línea de comandos multiplataforma de Microsoft para administrar los recursos de Azure. Puede usarlo en Mac OS, Linux, Windows y desde un navegador a través de Azure Cloud Shell.
 
-In this session we’re going to be working with Virtual Machines, let’s start first with creating one.
+En esta sesión vamos a trabajar con máquinas virtuales, comencemos primero con la creación de una.
 
-# Creating a virtual machine with the Azure CLI
+# Creación de una máquina virtual con la CLI de Azure
 
-With the azure CLI, every command will start with `az`
+Con la CLI azure, cada comando comenzará con `az`
 
-The `vm` command is used to work this virtual machines in the Azure CLI. Some of the most common sub commands are:
+El comando `vm` se usa para trabajar con estas máquinas virtuales en la CLI de Azure. Algunos de los subcomandos más comunes son:
 
 - `create`
 - `deallocate`
@@ -39,39 +39,39 @@ The `vm` command is used to work this virtual machines in the Azure CLI. Some of
 - `stop`
 - `update`
 
-For a complete list of commands, check out [Azure CLI reference documentation](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest). 
+Para obtener una lista completa de comandos, consulte [Azure CLI reference documentation](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest). 
 
-Let’s start with the first one: `az vm create`
+Comencemos con el primero: `az vm create`
 
 # az vm create
 
-This command is used to create a virtual machine in a resource group. The four parameters that must be supplied are:
+Este comando se utiliza para crear una máquina virtual en un grupo de recursos. Los cuatro parámetros que se deben suministrar son:
 
-- `--resource-group` The resource group that will own the virtual machine.
-- `--name` The name of the virtual machine. Must be unique within the resource group.
-- `--image` The operating system image to use to create the VM.
-- `--location` The region to place the VM in. Typically this would be close to the consumer of the VM.
-- `--verbose` Helpful to see progress while the VM is being created.
+- `--resource-group` El grupo de recursos que será el propietario de la máquina virtual.
+- `--name` El nombre de la máquina virtual. Debe ser único dentro del grupo de recursos.
+- `--image` La imagen del sistema operativo que se utilizará para crear la VM.
+- `--location` La región en la que colocar la VM. Por lo general, estaría cerca del consumidor de la VM.
+- `--verbose` Útil para ver el progreso mientras se crea la VM.
 
-Additionally we'll provide these parameters:
+Además, proporcionaremos estos parámetros:
 
-- `--admin-username` We are specifying the administrator account. By default the command will use your current username but since the rules for account names are different for each OS, it's safer to specify a name.
-- `generate-ssh-keys` This parameter is used for Linux distributions and creates a pair of security keys so we can use the ssh tool to access the virtual machine remotely. The pair of files are placed into the `.ssh` folder on your local machine and in the VM.
+- `--admin-username` Estamos especificando la cuenta de administrador. De forma predeterminada, el comando usará su nombre de usuario actual, pero dado que las reglas para los nombres de cuenta son diferentes para cada sistema operativo, es más seguro especificar un nombre.
+- `generate-ssh-keys` Este parámetro se usa para distribuciones de Linux y crea un par de claves de seguridad para que podamos usar la herramienta ssh para acceder a la máquina virtual de forma remota. El par de archivos se colocan en la carpeta `.ssh` en su máquina local y en la VM.
     
-    If you already have an SSH key named `id_rsa` in the target folder, it will be used rather than having a new generated key. 
+    Si ya tiene una clave SSH llamada `id_rsa` en la carpeta de destino, se utilizará en lugar de tener una nueva clave generada.
     
 
-Let's put it all together.
+Vamos a juntarlo todo.
 
 ```bash
 az vm create --resource-group reactorclidemo-rg --location eastus2 --name reactorclivm1 --image UbuntuLTS --admin-username azureuser --generate-ssh-keys --verbose
 ```
 
-Once the command is done, you will get a JSON response which includes the current state of the virtual machine and its public and private IP addresses assigned by Azure. 
+Una vez que finalice el comando, obtendrá una respuesta JSON que incluye el estado actual de la máquina virtual y sus direcciones IP públicas y privadas asignadas por Azure.
 
-# Connect to our VM with SSH
+# Conéctese a nuestra VM con SSH
 
-We can test that the Linux VM is up and running by using the public IP address in the ssh tool. We generated an SSH key pair when we created the VM, so we don't need a password. Since we set out admin name to `azureadmin` we can use the following command to connect
+Podemos probar que la máquina virtual Linux está en funcionamiento utilizando la dirección IP pública en la herramienta ssh. Generamos un par de claves SSH cuando creamos la VM, por lo que no necesitamos una contraseña. Dado que establecemos el nombre de administrador en `azureadmin`, podemos usar el siguiente comando para conectar
 
 ```bash
 ssh azureuser@publicipaddress
@@ -79,37 +79,37 @@ ssh azureuser@publicipaddress
 
 # VM images
 
-We used the `UbuntuLTS` image but Azure has several standard VM images we can use. To list them, use the `az vm image list --output table` command. This will output the most popular images that are part of an offline list built into the Azure CLI. 
+Usamos la imagen `UbuntuLTS` pero Azure tiene varias imágenes estándar de VM que podemos usar. Para enumerarlos, use el comando `az vm image list --output table`. Esto generará las imágenes más populares que forman parte de una lista sin conexión integrada en la CLI de Azure.
 
-Keep in mind that you can also create and upload your custom images to create VMs based on unique configurations. 
+Tenga en cuenta que también puede crear y cargar sus imágenes personalizadas para crear máquinas virtuales basadas en configuraciones únicas.
 
-If you want to get a full list, add the `--all` flag to the command. It helps to filter the list with the `--publisher` `--sku` or `--offer` options. 
+Si desea obtener una lista completa, agregue la marca `--all` al comando. Ayuda a filtrar la lista con las opciones `--publisher`` --sku` u `--offer`.
 
-If we want to see all Wordpress images, we can use
+Si queremos ver todas las imágenes de Wordpress, podemos usar
 
 ```bash
 az vm image list --sku Wordpress --output table --all
 ```
 
-Some images are only available in certain locations. You can add the `--location` flag to the command to scope the results to ones available in the region where you want to create the virtual machine. 
+Algunas imágenes solo están disponibles en determinadas ubicaciones. Puede agregar la marca `--location` al comando para limitar los resultados a los disponibles en la región donde desea crear la máquina virtual.
 
 ```bash
 az vm image list --location eastus2 --output table 
 ```
 
-# Sizing VMs properly
+# Dimensionar las VM correctamente
 
-A VM without the correct amount of memory or CPU will fail under load or run too slowly to be effective. 
+Una máquina virtual sin la cantidad correcta de memoria o CPU fallará bajo carga o funcionará con demasiada lentitud para ser efectiva.
 
-Azure defines a set of pre-defined VM sizes for Linux and Windows to choose from. The available sizes change based on the region you're creating the VM in. You can get a list of available sizes using the `az vm list-sizes` command. 
+Azure define un conjunto de tamaños de máquina virtual predefinidos para Linux y Windows para elegir. Los tamaños disponibles cambian según la región en la que está creando la máquina virtual. Puede obtener una lista de los tamaños disponibles usando el comando `az vm list-size`.
 
-We didn't specify a size in our create command, Azure selected a default general-purpose size for us. We can specify the size using the `--size` parameter. We could create a 2-core virtual machine:
+No especificamos un tamaño en nuestro comando de creación, Azure seleccionó un tamaño de uso general predeterminado para nosotros. Podemos especificar el tamaño usando el parámetro `--size`. Podríamos crear una máquina virtual de 2 núcleos:
 
 ```bash
 az vm create --resource-group reactorclidemo-rg --name reactorclivm1 --image UbuntuLTS --admin-username azureuser --generate-ssh --verbose --size "Standard_DS2_v2"
 ```
 
-We can also resize an existing VM. We first have to check if the desired size is available in the cluster our VM is part of. 
+También podemos cambiar el tamaño de una máquina virtual existente. Primero tenemos que verificar si el tamaño deseado está disponible en el clúster del que forma parte nuestra VM.
 
 `vm list-vm-resize-options`
 
@@ -117,22 +117,22 @@ We can also resize an existing VM. We first have to check if the desired size is
 az vm list-vm-resize-options --resource-group reactorclidemo-rg --name reactorclivm1 --oputput table
 ```
 
-This will return a list of all the possible size configurations available in the resource group. If the size we want isn't available in our cluster but is available in the region, we can deallocate the VM. This would stop the running VM and remove it from the current cluster without losing any resources. We can then resize it. 
+Esto devolverá una lista de todas las configuraciones de tamaño posibles disponibles en el grupo de recursos. Si el tamaño que queremos no está disponible en nuestro clúster, pero está disponible en la región, podemos desasignar la VM. Esto detendría la máquina virtual en ejecución y la eliminaría del clúster actual sin perder ningún recurso. Luego podemos cambiar su tamaño.
 
-To resize a VM, we use `vm resize` 
+Para cambiar el tamaño de una máquina virtual, usamos `vm resize`
 
 ```bash
 az vm resize --resource-group reactorclidemo-rg --name reactorclivm1 --size Standard_b2s
 ```
 
-# Query system and runtime information about the VM
+# Consulta la información del tiempo de ejecución y del sistema sobre la máquina virtual.
 
-We can use other vm commands to get information about our newly created machine. 
+Podemos usar otros comandos vm para obtener información sobre nuestra máquina recién creada.
 
-- `az vm list` will return all machines defined in this subscription. Filter the output with `--resource-group`
-- We've been using the `--output` flag with `table` this is to format the output in a way that's easier to read than the default JSON.
-- `az vm list-ip-addresses` will list the public and private IP addresses for a VM.
-- `az vm show` will give us more detailed information about a specific VM. This will return  fairly large amount of JSON data including attached storage devices, network interfaces, and more. This is a great chance to use JMESPath, a built-in query language for JSON.
+- `az vm list` devolverá todas las máquinas definidas en esta suscripción. Filtrar la salida con `--resource-group`
+- Hemos estado usando la marca `--output` con` table`, esto es para formatear la salida de una manera que sea más fácil de leer que el JSON predeterminado.
+- `az vm list-ip-addresses` mostrará una lista de las direcciones IP públicas y privadas de una máquina virtual.
+- `az vm show` nos dará información más detallada sobre una VM específica. Esto devolverá una cantidad bastante grande de datos JSON, incluidos dispositivos de almacenamiento adjuntos, interfaces de red y más. Esta es una gran oportunidad para usar JMESPath, un lenguaje de consulta integrado para JSON.
 
 # Filter our Azure CLI queries
 
@@ -140,13 +140,13 @@ We can use other vm commands to get information about our newly created machine.
 az vm show --resource-group reactordemocli-rg --name reactorclivm1 --query "osProfile.adminUsername"
 ```
 
-You might also find it help to pair with the `--output tsv` parameter. It is useful for scripting as well - for example, you can pull a value out of your Azure account and store it in an environment or script variable.
+También puede resultarle útil emparejarse con el parámetro `--output tsv`. También es útil para la creación de secuencias de comandos; por ejemplo, puede extraer un valor de su cuenta de Azure y almacenarlo en un entorno o variable de secuencia de comandos.
 
-# Start and stop your VM with the Azure CLI
+# Inicie y detenga su máquina virtual con la CLI de Azure
 
 ## Stop
 
-We can stop a running VM with the vm stop command. You must pass the name and resource group, or the unique ID for the VM:
+Podemos detener una máquina virtual en ejecución con el comando vm stop. Debe pasar el nombre y el grupo de recursos, o el ID único de la VM:
 
 ```bash
 az vm stop \
@@ -154,7 +154,7 @@ az vm stop \
 --resource-group [sandbox resource group name]
 ```
 
-We can verify it has stopped by attempting to ping the public IP address, using ssh, or through the vm get-instance-view command. This final approach returns the same basic data as vm show but includes details about the instance itself. Try entering the following command into Azure Cloud Shell to see the current running state of your VM:
+Podemos verificar que se haya detenido al intentar hacer ping a la dirección IP pública, usando ssh o mediante el comando vm get-instance-view. Este enfoque final devuelve los mismos datos básicos que vm show, pero incluye detalles sobre la instancia en sí. Intente ingresar el siguiente comando en Azure Cloud Shell para ver el estado de ejecución actual de su máquina virtual:
 
 ```bash
 az vm get-instance-view \
@@ -163,11 +163,11 @@ az vm get-instance-view \
     --query "instanceView.statuses[?starts_with(code, 'PowerState/')].displayStatus" -o tsv
 ```
 
-This command should return VM stopped as the result.
+Este comando debería devolver VM detenida como resultado.
 
 ## Start
 
-We can do the reverse through the vm start command.
+Podemos hacer lo contrario a través del comando vm start.
 
 ```bash
 az vm start \
@@ -175,13 +175,13 @@ az vm start \
     --resource-group [sandbox resource group name]
 ```
 
-This command will start a stopped VM. We can verify it through the vm get-instance-view query, which should now return VM running.
+Este comando iniciará una máquina virtual detenida. Podemos verificarlo a través de la consulta vm get-instance-view, que ahora debería devolver la VM en ejecución.
 
-## **Restart a VM**
+## **Reiniciar una VM**
 
-We can restart a VM if we have made changes that require a reboot running the `vm restart` command. You can add the `--no-wait` flag if you want the Azure CLI to return immediately without waiting for the VM to reboot.
+Podemos reiniciar una VM si hemos realizado cambios que requieran un reinicio ejecutando el comando `vm restart`. Puede agregar la marca `--no-wait` si desea que la CLI de Azure vuelva inmediatamente sin esperar a que se reinicie la máquina virtual.
 
-## **Delete a VM**
+## **Eliminar una VM**
 
 ```bash
 az vm delete \
@@ -189,41 +189,41 @@ az vm delete \
     --resource-group rg
 ```
 
-# Installing software on your VM
+# Instalación de software en su máquina virtual
 
-1. Locate the public IP address of your SampleVM Linux virtual machine.
+1. Busque la dirección IP pública de su máquina virtual SampleVM Linux.
 
 ```bash
 az vm list-ip-addresses --name SampleVM --output table
 ```
 
-2. Next, open an ssh connection to SampleVM.
+2. A continuación, abra una conexión ssh a SampleVM.
 
 ```bash
 ssh azureuser@<PublicIPAddress>
 ```
 
-3. Once you are logged in to the virtual machine, execute the following command to install the nginx web server.
+3. Una vez que haya iniciado sesión en la máquina virtual, ejecute el siguiente comando para instalar el servidor web nginx.
 
 ```bash
 sudo apt-get -y update && sudo apt-get -y install nginx
 ```
 
-4. Exit the Secure Shell.
+4. Salga de Secure Shell.
 
 ```bash
 exit
 ```
 
-5. In Azure Cloud Shell, use curl to read the default page from your Linux web server using the following command, replacing <PublicIPAddress> with the public IP you found previously. Alternatively, you can open a new browser tab and try to browse to the public IP address.
+5. En Azure Cloud Shell, use curl para leer la página predeterminada de su servidor web Linux con el siguiente comando, reemplazando <PublicIPAddress> con la IP pública que encontró anteriormente. Alternativamente, puede abrir una nueva pestaña del navegador e intentar buscar la dirección IP pública.
 
 ```bash
 curl -m 10 <PublicIPAddress>
 ```
 
-6. This command will fail because the Linux virtual machine doesn't expose port 80 (http) through the network security group that secures the network connectivity to the virtual machine. We can change this with the Azure CLI command vm open-port.
+6. Este comando fallará porque la máquina virtual Linux no expone el puerto 80 (http) a través del grupo de seguridad de red que asegura la conectividad de red a la máquina virtual. Podemos cambiar esto con el comando vm open-port de la CLI de Azure.
 
-7. Type the following into Cloud Shell to open port 80:
+7. Escriba lo siguiente en Cloud Shell para abrir el puerto 80:
 
 ```bash
 az vm open-port \
@@ -232,15 +232,15 @@ az vm open-port \
     --name SampleVM
 ```
 
-It will take a moment to add the network rule and open the port through the firewall.
+Tomará un momento agregar la regla de red y abrir el puerto a través del firewall.
 
-8. Run the curl command again.
+8. Ejecute el comando curl nuevamente.
 
 ```bash
 curl -m 10 <PublicIPAddress>
 ```
 
-9. This time it should return data. You can see the page in a browser as well.
+9. Esta vez debería devolver datos. También puede ver la página en un navegador.
 
 ```bash
 <!DOCTYPE html>
