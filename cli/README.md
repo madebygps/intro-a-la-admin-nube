@@ -51,12 +51,13 @@ Este comando se utiliza para crear una máquina virtual en un grupo de recursos.
 - `--name` El nombre de la máquina virtual. Debe ser único dentro del grupo de recursos.
 - `--image` La imagen del sistema operativo que se utilizará para crear la VM.
 - `--location` La región en la que colocar la VM. Por lo general, estaría cerca del consumidor de la VM.
-- `--verbose` Útil para ver el progreso mientras se crea la VM.
+
 
 Además, proporcionaremos estos parámetros:
 
 - `--admin-username` Estamos especificando la cuenta de administrador. De forma predeterminada, el comando usará su nombre de usuario actual, pero dado que las reglas para los nombres de cuenta son diferentes para cada sistema operativo, es más seguro especificar un nombre.
 - `generate-ssh-keys` Este parámetro se usa para distribuciones de Linux y crea un par de claves de seguridad para que podamos usar la herramienta ssh para acceder a la máquina virtual de forma remota. El par de archivos se colocan en la carpeta `.ssh` en su máquina local y en la VM.
+- `--verbose` Útil para ver el progreso mientras se crea la VM.
     
     Si ya tiene una clave SSH llamada `id_rsa` en la carpeta de destino, se utilizará en lugar de tener una nueva clave generada.
     
@@ -64,7 +65,7 @@ Además, proporcionaremos estos parámetros:
 Vamos a juntarlo todo.
 
 ```bash
-az vm create --resource-group reactorclidemo-rg --location eastus2 --name reactorclivm1 --image UbuntuLTS --admin-username azureuser --generate-ssh-keys --verbose
+az vm create --resource-group {resourcegroup} --location eastus2 --name {vmname} --image UbuntuLTS --admin-username azureuser --generate-ssh-keys --verbose
 ```
 
 Una vez que finalice el comando, obtendrá una respuesta JSON que incluye el estado actual de la máquina virtual y sus direcciones IP públicas y privadas asignadas por Azure.
@@ -106,7 +107,7 @@ Azure define un conjunto de tamaños de máquina virtual predefinidos para Linux
 No especificamos un tamaño en nuestro comando de creación, Azure seleccionó un tamaño de uso general predeterminado para nosotros. Podemos especificar el tamaño usando el parámetro `--size`. Podríamos crear una máquina virtual de 2 núcleos:
 
 ```bash
-az vm create --resource-group reactorclidemo-rg --name reactorclivm1 --image UbuntuLTS --admin-username azureuser --generate-ssh --verbose --size "Standard_DS2_v2"
+az vm create --resource-group {resourcegroup} --name {vmname} --image UbuntuLTS --admin-username azureuser --generate-ssh --verbose --size "Standard_DS2_v2"
 ```
 
 También podemos cambiar el tamaño de una máquina virtual existente. Primero tenemos que verificar si el tamaño deseado está disponible en el clúster del que forma parte nuestra VM.
@@ -114,7 +115,7 @@ También podemos cambiar el tamaño de una máquina virtual existente. Primero t
 `vm list-vm-resize-options`
 
 ```bash
-az vm list-vm-resize-options --resource-group reactorclidemo-rg --name reactorclivm1 --oputput table
+az vm list-vm-resize-options --resource-group {resourcegroup} --name {vm} --output table
 ```
 
 Esto devolverá una lista de todas las configuraciones de tamaño posibles disponibles en el grupo de recursos. Si el tamaño que queremos no está disponible en nuestro clúster, pero está disponible en la región, podemos desasignar la VM. Esto detendría la máquina virtual en ejecución y la eliminaría del clúster actual sin perder ningún recurso. Luego podemos cambiar su tamaño.
@@ -122,10 +123,10 @@ Esto devolverá una lista de todas las configuraciones de tamaño posibles dispo
 Para cambiar el tamaño de una máquina virtual, usamos `vm resize`
 
 ```bash
-az vm resize --resource-group reactorclidemo-rg --name reactorclivm1 --size Standard_b2s
+az vm resize --resource-group {resourcegroup} --name {vm} --size Standard_b2s
 ```
 
-# Consulta la información del tiempo de ejecución y del sistema sobre la máquina virtual.
+# Consulta información del systema
 
 Podemos usar otros comandos vm para obtener información sobre nuestra máquina recién creada.
 
@@ -134,10 +135,10 @@ Podemos usar otros comandos vm para obtener información sobre nuestra máquina 
 - `az vm list-ip-addresses` mostrará una lista de las direcciones IP públicas y privadas de una máquina virtual.
 - `az vm show` nos dará información más detallada sobre una VM específica. Esto devolverá una cantidad bastante grande de datos JSON, incluidos dispositivos de almacenamiento adjuntos, interfaces de red y más. Esta es una gran oportunidad para usar JMESPath, un lenguaje de consulta integrado para JSON.
 
-# Filter our Azure CLI queries
+# Filtrar nuestras consultas de la CLI de Azure
 
 ```bash
-az vm show --resource-group reactordemocli-rg --name reactorclivm1 --query "osProfile.adminUsername"
+az vm show --resource-group {resourcegroup} --name {vm} --query "osProfile.adminUsername"
 ```
 
 También puede resultarle útil emparejarse con el parámetro `--output tsv`. También es útil para la creación de secuencias de comandos; por ejemplo, puede extraer un valor de su cuenta de Azure y almacenarlo en un entorno o variable de secuencia de comandos.
@@ -150,7 +151,7 @@ Podemos detener una máquina virtual en ejecución con el comando vm stop. Debe 
 
 ```bash
 az vm stop \
---name SampleVM \
+--name {vm} \
 --resource-group [sandbox resource group name]
 ```
 
@@ -158,8 +159,8 @@ Podemos verificar que se haya detenido al intentar hacer ping a la dirección IP
 
 ```bash
 az vm get-instance-view \
-    --name SampleVM \
-    --resource-group [sandbox resource group name] \
+    --name {vmname} \
+    --resource-group {resourcegroup} \
     --query "instanceView.statuses[?starts_with(code, 'PowerState/')].displayStatus" -o tsv
 ```
 
@@ -171,7 +172,7 @@ Podemos hacer lo contrario a través del comando vm start.
 
 ```bash
 az vm start \
-    --name SampleVM \
+    --name {vmname} \
     --resource-group [sandbox resource group name]
 ```
 
@@ -185,8 +186,8 @@ Podemos reiniciar una VM si hemos realizado cambios que requieran un reinicio ej
 
 ```bash
 az vm delete \
-    --name vm1 \
-    --resource-group rg
+    --name {vmname} \
+    --resource-group {resourcegroup}
 ```
 
 # Instalación de software en su máquina virtual
@@ -194,7 +195,7 @@ az vm delete \
 1. Busque la dirección IP pública de su máquina virtual SampleVM Linux.
 
 ```bash
-az vm list-ip-addresses --name SampleVM --output table
+az vm list-ip-addresses --name {vmname} --output table
 ```
 
 2. A continuación, abra una conexión ssh a SampleVM.
