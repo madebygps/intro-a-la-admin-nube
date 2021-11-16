@@ -1,0 +1,16 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448.1817626953125 370.45452880859375" width="1344.5452880859375" height="1111.3635864257812">
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style>
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="448.1817626953125" height="370.45452880859375" fill="#ffffff"></rect><g stroke-linecap="round" transform="translate(10 10) rotate(0 214.09088134765625 175.22726440429688)"><path d="M0.37 0.01 C111.73 0.99, 221.78 0.32, 427.96 1.01 M0.17 0.36 C160.54 -1.51, 320.65 -0.82, 427.9 -0.21 M428.5 0.55 C430.47 122.31, 428.53 245.47, 429.05 349.7 M428.71 0.64 C426.22 81.18, 427.34 161.68, 428.62 350.02 M427.46 349.72 C326.31 350.92, 223.91 351.81, -0.82 351.18 M428.14 350.02 C266.18 351.31, 105.05 351.05, -0.33 350.87 M0.47 351.19 C-0.72 212.46, -0.67 75.26, 1.01 -0.13 M-0.44 350.64 C-1.36 259.23, -2.47 169.35, -0.1 -0.61" stroke="#000000" stroke-width="1" fill="none"></path></g><g transform="translate(41.09088134765625 27.727218627929688) rotate(0 57.5 12.5)"><text x="0" y="18" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">vnetdemo-rg</text></g><g stroke-linecap="round" transform="translate(44.09088134765625 71.818115234375) rotate(0 184.31817626953125 128.6363525390625)"><path d="M-1.18 0.01 C91.19 -1.94, 183 -1.89, 369.41 -0.25 M0.48 0.34 C90.3 -1.77, 182.37 -1.54, 368.21 0.48 M369.29 -1.51 C369.84 54.58, 369.67 110.07, 369.23 257.41 M369.21 0.39 C367.47 68.11, 368.47 137.9, 368.27 256.81 M369.58 256.82 C290.59 256.09, 212.87 256.96, 0.06 256.26 M368.52 257.28 C288.37 258.47, 208.89 258.04, 0.48 257.02 M1.06 258.6 C1.34 154.88, 0.22 54.99, -1.22 0.41 M0.48 257.3 C0.61 181.9, 0.39 105.68, -0.29 0.61" stroke="#000000" stroke-width="1" fill="none"></path></g><g transform="translate(83.6363525390625 85.54541015625) rotate(0 52.5 25)"><text x="0" y="18" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">vnet1</text><text x="0" y="43" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">10.0.0.0/16</text></g></svg>
