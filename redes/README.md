@@ -8,68 +8,6 @@ Aprende más:
 - [Azure VNet FAQ](https://docs.microsoft.com/azure/virtual-network/virtual-networks-faq)
 - [Azure Networking Deep Dive](https://social.technet.microsoft.com/wiki/contents/articles/52852.azure-networking-deep-dive-in-vnet-subnets.aspx)
 
- ## ¿Qué son las redes virtuales de Azure?
-
-Las redes virtuales de Azure proporcionan capacidades clave:
-
-- **Aislamiento y segmentación:**
-
-    - Azure le permite crear múltiples redes virtuales aisladas. Luego, puede segmentar ese espacio de direcciones IP en subredes.
-
-
-- **Comunicarse a Internet:**
-
-    - Una máquina virtual en Azure puede conectarse a Internet de forma predeterminada. Puede habilitar las conexiones entrantes desde Internet definiendo una dirección IP pública o un equilibrador de carga público. Para la administración de máquinas virtuales, puede conectarse a través de la CLI de Azure, el Protocolo de escritorio remoto (RDP) o Secure Shell (SSH).
-
-
-- **Comunicarse entre recursos de Azure:**
-
-   - Las redes virtuales pueden conectar no solo máquinas virtuales, sino otros recursos de Azure, como App Service Environment, Azure Kubernetes Service y conjuntos de escalado de máquinas virtuales de Azure.
-
-    - Puede usar puntos de conexión de servicio para conectarse a otros tipos de recursos de Azure, como cuentas de almacenamiento y bases de datos de Azure SQL. Este enfoque le permite vincular varios recursos de Azure a redes virtuales, lo que mejora la seguridad y proporciona un enrutamiento óptimo entre recursos.
-
-- **Comunicarse con recursos locales:**
-
-    - Redes privadas virtuales punto a sitio
-
-         El equipo cliente inicia una conexión VPN cifrada a Azure, conectando ese equipo a la red virtual de Azure.
-
-    - Redes privadas virtuales de sitio a sitio
-
-        Una VPN de sitio a sitio vincula su dispositivo VPN local o puerta de enlace a la puerta de enlace de VPN de Azure en una red virtual. En efecto, los dispositivos en Azure pueden aparecer como si estuvieran en la red local. La conexión está encriptada y funciona a través de Internet.
-
-    - Azure ExpressRoute
-
-        Para entornos en los que necesita un mayor ancho de banda y niveles de seguridad aún más altos, Azure ExpressRoute es el mejor enfoque. Azure ExpressRoute proporciona conectividad privada dedicada a Azure que no viaja a través de Internet. 
-
-- **Ruta del tráfico de la red:**
-
-    De forma predeterminada, Azure enrutará el tráfico entre subredes en cualquier red virtual conectada, redes locales e Internet. Sin embargo, puede controlar el enrutamiento y anular esa configuración de la siguiente manera:
-
-    - Tablas de ruta
-
-        Una tabla de ruta le permite definir reglas sobre cómo se debe dirigir el tráfico. Puede crear tablas de enrutamiento personalizadas que controlen cómo se enrutan los paquetes entre subredes.
-
-    - Protocolo de puerta de enlace fronteriza
-
-        El Protocolo de puerta de enlace fronteriza (BGP) funciona con puertas de enlace VPN de Azure o ExpressRoute para propagar rutas BGP locales a redes virtuales de Azure.
-
-    - Filtrar el tráfico de la red
-
-        Las redes virtuales de Azure le permiten filtrar el tráfico entre subredes mediante los siguientes enfoques:
-
-        - Grupos de seguridad de red
-
-            Un grupo de seguridad de red (NSG) es un recurso de Azure que puede contener varias reglas de seguridad entrantes y salientes. Puede definir estas reglas para permitir o bloquear el tráfico, en función de factores como la dirección IP de origen y destino, el puerto y el protocolo.
-
-        - Dispositivos virtuales de red
-
-            Un dispositivo virtual de red es una máquina virtual especializada que se puede comparar con un dispositivo de red reforzado. Un dispositivo virtual de red lleva a cabo una función de red particular, como ejecutar un firewall o realizar una optimización de WAN.
-
-- **Conecta redes virtuales**
-
-    Puede vincular redes virtuales mediante el emparejamiento de redes virtuales. El emparejamiento permite que los recursos de cada red virtual se comuniquen entre sí. Estas redes virtuales pueden estar en regiones independientes, lo que le permite crear una red interconectada global a través de Azure.
-
 ## Casos de uso de VNet
 
 Una red virtual de Azure (VNet) es una representación de su propia red en la nube. Es un aislamiento lógico de la nube de Azure dedicada a su suscripción.
@@ -83,8 +21,6 @@ Las redes virtuales se pueden utilizar de muchas formas:
 - **Habilite escenarios de nube híbrida:** Las redes virtuales le brindan la flexibilidad para admitir una variedad de escenarios de nube híbrida. Puede conectar de forma segura aplicaciones basadas en la nube a cualquier tipo de sistema local, como mainframes y sistemas Unix.
 
 ![alt text](img/1.png "Title")
-
-## Subnets 
 
 ## Subredes
 
@@ -136,7 +72,7 @@ VM basadas en roles, como controladores de dominio y servidores DNS.
 
 Creemos una red virtual, tres subredes, una máquina virtual en cada una, asegurémonos de que solo Vm1 tenga una IP pública y asegurémonos de que podemos RDP en todas y hacer ping a todas.
 
-![alt text](img/4.png "Title")
+![alt text](img/4.svg "Title")
 
 
 1. Crea un grupo de recursos
